@@ -10,10 +10,6 @@ function App() {
 
   return (
     <>
-    <Nav />
-    <Home />
-    <Detection />
-    <ChatBot />
     </>
   )
 }
