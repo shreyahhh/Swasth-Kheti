@@ -41,8 +41,6 @@ genai.configure(api_key=API_KEY)
 gemini_model_name = "gemini-1.5-flash"
 gemini_model = genai.GenerativeModel(gemini_model_name)
 
-def home(request):
-    return render(request, 'index.html')
 
 @api_view(['POST'])
 def predict(request):
