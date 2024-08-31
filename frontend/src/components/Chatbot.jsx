@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -79,6 +78,20 @@ function Chatbot() {
     }
   };
 
+  const handlePrevention = () => {
+    if (prediction) {
+      setInputMessage(`What are the prevention methods for ${prediction}?`);
+      setChatStarted(true);
+    }
+  };
+
+  const handleCure = () => {
+    if (prediction) {
+      setInputMessage(`What are the cure methods for ${prediction}?`);
+      setChatStarted(true);
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-purple-400 via-black-500 to-red-500">
       <div className="h-24 flex justify-between items-center px-6 shadow-lg">
@@ -119,13 +132,29 @@ function Chatbot() {
                     readOnly
                   />
                 </div>
-                <button
-                  onClick={startChat}
-                  className="bg-purple-500 text-white text-xl px-6 py-3 rounded-full hover:bg-purple-600 transition-colors"
-                  disabled={isLoading}
-                >
-                  Start Chat
-                </button>
+                <div className="flex space-x-4">
+                  <button
+                    onClick={startChat}
+                    className="bg-purple-500 text-white text-xl px-6 py-3 rounded-full hover:bg-purple-600 transition-colors"
+                    disabled={isLoading}
+                  >
+                    Start Chat
+                  </button>
+                  <button
+                    onClick={handlePrevention}
+                    className="bg-green-500 text-white text-xl px-6 py-3 rounded-full hover:bg-green-600 transition-colors"
+                    disabled={isLoading}
+                  >
+                    Prevention
+                  </button>
+                  <button
+                    onClick={handleCure}
+                    className="bg-yellow-500 text-white text-xl px-6 py-3 rounded-full hover:bg-yellow-600 transition-colors"
+                    disabled={isLoading}
+                  >
+                    Cure
+                  </button>
+                </div>
               </>
             )}
           </div>
