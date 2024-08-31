@@ -4,17 +4,16 @@ import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import Home from './components/Home'
 import Chatbot from './components/Chatbot.jsx'
-import Layout from './layout.jsx'
+import Layout from './Layout.jsx'
 import Article from './components/Article.jsx'
-import About from './components/About.jsx'
+import About from './components/About'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
-      <Route index element={<Home />} />
       <Route path='/chatbot' element={<Chatbot />} />
-      <Route path='/article' element={<Article />} />
       <Route path='/about' element={<About />} />
+      <Route path='/article' element={<Article />} />
     </Route>
   )
 )

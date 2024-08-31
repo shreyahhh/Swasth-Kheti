@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -10,6 +9,8 @@ function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
+  const [detectedDisease, setDetectedDisease] = useState("");
+  const messagesEndRef = useRef(null);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -32,7 +33,13 @@ function Chatbot() {
         );
 
         const prediction = response.data.result;
+        const chatEnabled = response.data.chat_enabled;
         setPrediction(prediction);
+        setDetectedDisease(prediction);
+
+        if (!chatEnabled) {
+          alert("The plant is healthy. No chat needed.");
+        }
       } catch (error) {
         console.error("Error uploading image:", error);
         setPrediction("Error uploading image. Please try again.");
@@ -42,41 +49,61 @@ function Chatbot() {
     }
   };
 
-  const startChat = () => {
-    if (image) {
-      setChatStarted(true);
-      setInputMessage(prediction);
-    } else {
-      alert("Please upload an image before starting the chat.");
-    }
-  };
-
   const handleInputChange = (event) => {
     setInputMessage(event.target.value);
   };
 
-  const sendMessage = async () => {
-    if (inputMessage.trim() === "") return;
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-    const userMessage = { text: inputMessage, sender: "user" };
+  const sendMessage = async (message) => {
+    if (message.trim() === "") return;
+
+    const userMessage = { text: message, sender: "user" };
     setMessages([...messages, userMessage]);
     setInputMessage("");
     setIsLoading(true);
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/chat/", {
-        message: inputMessage,
+        question: message,
+        disease: detectedDisease,
       });
 
-      const botMessage = { text: response.data.response, sender: "bot" };
+      const botMessage = { text: response.data.answer, sender: "bot" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
-      const errorMessage = { text: "Error: Unable to get response", sender: "bot" };
+      const errorMessage = {
+        text: "Error: Unable to get a response. Please try again later.",
+        sender: "bot",
+      };
       setMessages((prevMessages) => [...prevMessages, errorMessage]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const startChatWithPrompt = (prompt) => {
+    setChatStarted(true);
+    setMessages([
+      { text: prediction, sender: "bot" },
+      { text: prompt, sender: "user" }
+    ]);
+    sendMessage(prompt);
+  };
+
+  const handleStartChat = () => {
+    startChatWithPrompt(`Tell me more about ${prediction}.`);
+  };
+
+  const handlePrevention = () => {
+    startChatWithPrompt(`What are the prevention methods for ${prediction}?`);
+  };
+
+  const handleCure = () => {
+    startChatWithPrompt(`What are the cure methods for ${prediction}?`);
   };
 
   return (
@@ -91,7 +118,7 @@ function Chatbot() {
         </Link>
       </div>
 
-      <div className="flex-grow p-6">
+      <div className="flex-grow p-6 overflow-y-auto">
         {!chatStarted ? (
           <div className="flex flex-col items-center justify-center h-full bg-white bg-opacity-20 rounded-lg shadow-xl p-8">
             <label className="bg-blue-500 text-white text-xl px-6 py-3 rounded-full cursor-pointer hover:bg-blue-600 transition-colors mb-6">
@@ -119,13 +146,28 @@ function Chatbot() {
                     readOnly
                   />
                 </div>
-                <button
-                  onClick={startChat}
-                  className="bg-purple-500 text-white text-xl px-6 py-3 rounded-full hover:bg-purple-600 transition-colors"
-                  disabled={isLoading}
-                >
-                  Start Chat
-                </button>
+                {prediction && !isLoading && (
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={handleStartChat}
+                      className="bg-purple-500 text-white text-xl px-6 py-3 rounded-full hover:bg-purple-600 transition-colors"
+                    >
+                      Start Chat
+                    </button>
+                    <button
+                      onClick={handlePrevention}
+                      className="bg-green-500 text-white text-xl px-6 py-3 rounded-full hover:bg-green-600 transition-colors"
+                    >
+                      Prevention
+                    </button>
+                    <button
+                      onClick={handleCure}
+                      className="bg-yellow-500 text-white text-xl px-6 py-3 rounded-full hover:bg-yellow-600 transition-colors"
+                    >
+                      Cure
+                    </button>
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -150,7 +192,9 @@ function Chatbot() {
                   </span>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
+
             <div className="flex">
               <input
                 type="text"
@@ -160,7 +204,7 @@ function Chatbot() {
                 className="flex-grow p-3 text-lg rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
-                onClick={sendMessage}
+                onClick={() => sendMessage(inputMessage)}
                 disabled={isLoading}
                 className="bg-blue-500 text-white text-xl px-6 py-3 rounded-r-lg hover:bg-blue-600 transition-colors"
               >
