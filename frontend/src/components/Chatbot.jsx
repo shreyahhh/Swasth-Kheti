@@ -38,7 +38,7 @@ function Chatbot() {
         setDetectedDisease(prediction);
 
         if (!chatEnabled) {
-          alert("The plant is healthy. No chat needed.");
+          alert("Not a Plant . No chat needed.");
         }
       } catch (error) {
         console.error("Error uploading image:", error);
