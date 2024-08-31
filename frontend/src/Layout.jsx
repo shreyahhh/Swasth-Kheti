@@ -5,12 +5,15 @@ import { Outlet, useLocation } from 'react-router-dom'
 function Layout() {
     const location = useLocation();
     const isChatbotRoute = location.pathname === '/chatbot';
+    const isArticleRoute = location.pathname === '/article';
+    const isAboutRoute = location.pathname === '/about';
 
     return (
         <>
-            {!isChatbotRoute && <Nav />}
+            {!isChatbotRoute && !isArticleRoute && !isAboutRoute && <Nav />}
             <Outlet />
-            {!isChatbotRoute && <Footer />}
+            {!isChatbotRoute && !isArticleRoute && !isAboutRoute && <Footer />}
+            
         </>
     )
 }

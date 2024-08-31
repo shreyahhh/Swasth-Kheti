@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -7,6 +8,8 @@ function Chatbot() {
   const [chatStarted, setChatStarted] = useState(false);
   const [prediction, setPrediction] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState("");
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -28,8 +31,7 @@ function Chatbot() {
           }
         );
 
-        // Access the prediction from the response data
-        const prediction = response.data.result; // Assuming "result" contains the prediction
+        const prediction = response.data.result;
         setPrediction(prediction);
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -43,8 +45,37 @@ function Chatbot() {
   const startChat = () => {
     if (image) {
       setChatStarted(true);
+      setInputMessage(prediction);
     } else {
       alert("Please upload an image before starting the chat.");
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setInputMessage(event.target.value);
+  };
+
+  const sendMessage = async () => {
+    if (inputMessage.trim() === "") return;
+
+    const userMessage = { text: inputMessage, sender: "user" };
+    setMessages([...messages, userMessage]);
+    setInputMessage("");
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/chat/", {
+        message: inputMessage,
+      });
+
+      const botMessage = { text: response.data.response, sender: "bot" };
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      const errorMessage = { text: "Error: Unable to get response", sender: "bot" };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,18 +132,38 @@ function Chatbot() {
         ) : (
           <div className="h-full flex flex-col bg-white bg-opacity-20 rounded-lg shadow-xl p-6">
             <div className="flex-grow overflow-y-auto mb-6">
-              {/* Chat messages will go here */}
-              <p className="text-white text-xl">
-                Chat messages will appear here
-              </p>
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`mb-4 ${
+                    message.sender === "user" ? "text-right" : "text-left"
+                  }`}
+                >
+                  <span
+                    className={`inline-block p-2 rounded-lg ${
+                      message.sender === "user"
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-300 text-black"
+                    }`}
+                  >
+                    {message.text}
+                  </span>
+                </div>
+              ))}
             </div>
             <div className="flex">
               <input
                 type="text"
+                value={inputMessage}
+                onChange={handleInputChange}
                 placeholder="Type your message..."
                 className="flex-grow p-3 text-lg rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <button className="bg-blue-500 text-white text-xl px-6 py-3 rounded-r-lg hover:bg-blue-600 transition-colors">
+              <button
+                onClick={sendMessage}
+                disabled={isLoading}
+                className="bg-blue-500 text-white text-xl px-6 py-3 rounded-r-lg hover:bg-blue-600 transition-colors"
+              >
                 Send
               </button>
             </div>

@@ -5,12 +5,16 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import Home from './components/Home'
 import Chatbot from './components/Chatbot.jsx'
 import Layout from './layout.jsx'
+import Article from './components/Article.jsx'
+import About from './components/About.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />} />
       <Route path='/chatbot' element={<Chatbot />} />
+      <Route path='/article' element={<Article />} />
+      <Route path='/about' element={<About />} />
     </Route>
   )
 )

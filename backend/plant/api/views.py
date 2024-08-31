@@ -15,7 +15,7 @@ model = torch.hub.load(HUB_URL, MODEL_NAME, pretrained=True)
 
 
 
-MODEL_PATH = r"C:\Users\keshav singh\Desktop\main\Swasth-Kheti\backend\plant\api\model\model.pt"
+MODEL_PATH = r"C:\project\Swasth-Kheti\backend\plant\api\model\model.pt"
 model = torch.load(MODEL_PATH, map_location=torch.device('cpu'))
 model.eval()
 
