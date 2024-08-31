@@ -31,7 +31,7 @@ function Nav() {
         <div className="relative w-full">
           <div
             className={`fixed flex justify-between items-center px-4 md:px-8 shadow-lg rounded-full left-1/2 transform -translate-x-1/2 transition-all duration-300 hover:-translate-y-2 h-16 md:h-20 ${
-              scrolled ? 'w-11/12 md:w-1/2 bg-[#C6B9CD]' : 'w-11/12 md:w-3/4 bg-transparent'
+              scrolled ? 'w-11/12 md:w-1/2 bg-[#A8B18F]' : 'w-11/12 md:w-3/4 bg-transparent'
             }`}
             style={{ 
               top: scrolled ? '10px' : '20px',
@@ -53,7 +53,7 @@ function Nav() {
         </div>
         
         {/* Content container */}
-        <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 flex justify-between items-center px-8 md:px-16">
+        <div className={`absolute top-1/2 left-0 right-0 transform -translate-y-1/2 flex justify-between items-center px-8 md:px-16 transition-opacity duration-300 ${scrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           {/* Plant disease detector content */}
           <div className="w-2/3 max-w-2xl bg-white bg-opacity-90 p-8 rounded-lg shadow-xl transform transition-all duration-300 hover:scale-105">
             <h2 className="text-3xl font-bold mb-6 text-green-800">Plant Disease Detector</h2>

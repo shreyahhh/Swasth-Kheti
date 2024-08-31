@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import chatbotBackground from "../assets/video/chatbotBackground.mp4";
 
 function Chatbot() {
   const [image, setImage] = useState(null);
@@ -107,8 +108,16 @@ function Chatbot() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-purple-400 via-black-500 to-red-500">
-      <div className="h-24 flex justify-between items-center px-6 shadow-lg">
+    <div className="h-screen flex flex-col relative overflow-hidden">
+      <video
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        src={chatbotBackground}
+        autoPlay
+        loop
+        muted
+      />
+
+      <div className="relative z-10 h-24 flex justify-between items-center px-6 shadow-lg bg-black bg-opacity-50">
         <h1 className="text-white text-3xl font-bold">AI Chatbot</h1>
         <Link
           to="/"
@@ -118,7 +127,7 @@ function Chatbot() {
         </Link>
       </div>
 
-      <div className="flex-grow p-6 overflow-y-auto">
+      <div className="relative z-10 flex-grow p-6 overflow-y-auto">
         {!chatStarted ? (
           <div className="flex flex-col items-center justify-center h-full bg-white bg-opacity-20 rounded-lg shadow-xl p-8">
             <label className="bg-blue-500 text-white text-xl px-6 py-3 rounded-full cursor-pointer hover:bg-blue-600 transition-colors mb-6">
