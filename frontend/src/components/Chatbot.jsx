@@ -38,9 +38,9 @@ function Chatbot() {
         setPrediction(prediction);
         setDetectedDisease(prediction);
 
-        if (!chatEnabled) {
-          alert("Not a Plant . No chat needed.");
-        }
+        // if (!chatEnabled) {
+        //   alert("Not a Plant . No chat needed.");
+        // }
       } catch (error) {
         console.error("Error uploading image:", error);
         setPrediction("Error uploading image. Please try again.");

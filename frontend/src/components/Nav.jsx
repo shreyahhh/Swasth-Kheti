@@ -30,24 +30,24 @@ function Nav() {
       >
         <div className="relative w-full">
           <div
-            className={`fixed flex justify-between items-center px-4 md:px-8 shadow-lg rounded-full left-1/2 transform -translate-x-1/2 transition-all duration-300 hover:-translate-y-2 h-16 md:h-20 ${
-              scrolled ? 'w-11/12 md:w-1/2 bg-[#A8B18F]' : 'w-11/12 md:w-3/4 bg-transparent'
+            className={`fixed flex justify-between items-center px-4 md:px-8 shadow-lg rounded-full left-1/2 transform -translate-x-1/2 transition-all duration-300 hover:-translate-y-2 h-16 md:h-20  ${
+              scrolled ? 'w-11/12 md:w-1/2 bg-[#A8B18F] text-white' : 'w-11/12 md:w-3/4 bg-transparent'
             }`}
             style={{ 
               top: scrolled ? '10px' : '20px',
             }}
           >
-            <Link to="/" className="text-slate-50 text-xl md:text-2xl font-bold">PLANT</Link>
+            <Link to="/" className={`text-xl md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>PLANT</Link>
             <div className="md:hidden">
-              <button onClick={() => setMenuOpen(!menuOpen)} className="text-slate-50 text-2xl">
+              <button onClick={() => setMenuOpen(!menuOpen)} className={`text-2xl ${scrolled ? 'text-white' : 'text-[#166434]'}`}>
                 ☰
               </button>
             </div>
             <div className={`md:flex gap-4 md:gap-8 ${menuOpen ? 'flex flex-col absolute top-full right-0 mt-2 bg-[#C6B9CD] p-4 rounded-lg' : 'hidden'}`}>
-              <NavLink to="/" className="text-slate-50 text-lg md:text-2xl">Home</NavLink>
-              <NavLink to="/#about" className="text-slate-50 text-lg md:text-2xl">About</NavLink>
-              <NavLink to="/chatbot" className="text-slate-50 text-lg md:text-2xl">ChatBot</NavLink>
-              <NavLink to="/#article" className="text-slate-50 text-lg md:text-2xl">Article</NavLink>
+              <NavLink to="/" className={`text-lg md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>Home</NavLink>
+              <NavLink to="/#about" className={`text-lg md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>About</NavLink>
+              <NavLink to="/chatbot" className={`text-lg md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>ChatBot</NavLink>
+              <NavLink to="/#article" className={`text-lg md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>Article</NavLink>
             </div>
           </div>
         </div>
