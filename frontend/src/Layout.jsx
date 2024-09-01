@@ -6,6 +6,7 @@ import Home from './components/Home'
 import About from './components/About'; 
 import Article from './components/Article';
 import HindiArticle from './components/HindiArticle.jsx'
+import GoogleTranslate from './components/GoogleTranslate'
 
 function Layout() {
     const location = useLocation();
@@ -24,6 +25,7 @@ function Layout() {
 
     return (
         <>
+
             {!isChatbotRoute && <Nav />}
             {!isChatbotRoute && (
                 <>
@@ -35,6 +37,7 @@ function Layout() {
             )}
             <Outlet />
             {!isChatbotRoute && <Footer />}
+            <GoogleTranslate />
         </>
     )
 }
