@@ -143,7 +143,7 @@ def chat(request):
         chat = gemini_model.start_chat()
 
         # Provide context about the detected disease
-        context = f"The plant disease '{disease}' has been detected. Answer the following question briefly in 100 words: {question}"
+        context = f"The plant disease '{disease}' has been detected. Answer the following question briefly in 100 words: {question}. Also give reference link of articles or research papers to the disease and the question."
 
         # Send the message to Gemini and get the response
         response = chat.send_message(context)
