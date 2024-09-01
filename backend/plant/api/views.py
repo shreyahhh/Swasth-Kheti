@@ -16,23 +16,19 @@ model = torch.hub.load(HUB_URL, MODEL_NAME, pretrained=True)
 
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e0b156dd510e8cdc2b8d39150a5cb0c2ac999ac0
 BASE_DIR = Path(__file__).resolve().parent
 
 # Define the model path relative to the base directory
 MODEL_PATH = BASE_DIR / "model" / "model.pt"
-<<<<<<< HEAD
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'model', 'model.pt')
 
-=======
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'model', 'model.pt')
->>>>>>> e0b156dd510e8cdc2b8d39150a5cb0c2ac999ac0
+
 model = torch.load(MODEL_PATH, map_location=torch.device('cpu'))
 model.eval()
 
