@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
@@ -7,11 +7,10 @@ import chatbotBackground from "../assets/video/chatbotBackground.mp4";
 import { Image } from 'antd';
 import { Input } from 'antd';
 
-import { LoadingOutlined } from '@ant-design/icons';
-import { Flex, Spin } from 'antd';
 const { Dragger } = Upload;
 
 function Chatbot() {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [image, setImage] = useState(null);
   const [chatStarted, setChatStarted] = useState(false);
   const [prediction, setPrediction] = useState("");
@@ -51,9 +50,9 @@ function Chatbot() {
 
         onSuccess("ok");
 
-        // if (!chatEnabled) {
-        //   alert("Not a Plant . No chat needed.");
-        // }
+        if (!chatEnabled) {
+          alert("Either the uploaded image is not a plant or it is healthy. No chat needed.");
+        }
       } catch (error) {
         console.error("Error uploading image:", error);
         setPrediction("Error uploading image. Please try again.");
@@ -99,6 +98,11 @@ function Chatbot() {
 
       const botMessage = { text: response.data.answer, sender: "bot" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
+
+      // Navigate to the cure page if the message is related to cure
+      if (message.toLowerCase().includes("cure")) {
+        navigate("/cure"); // Change this to the actual route for the cure page
+      }
     } catch (error) {
       console.error("Error sending message:", error);
       const errorMessage = {
@@ -155,8 +159,9 @@ function Chatbot() {
       <div className="relative z-10 flex-grow p-6 overflow-y-auto">
         {!chatStarted ? (
           <div className="flex flex-col items-center justify-center h-full bg-white bg-opacity-20 rounded-lg shadow-xl p-8">
+            {/* Upload Image Button */}
             {!image && showUploader && (
-              <Dragger {...props} className="w-1/2 max-w-md bg-white bg-opacity-40 rounded-lg ">
+              <Dragger {...props} className="w-1/2 max-w-md bg-white bg-opacity-40 rounded-lg mb-4">
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>
@@ -179,38 +184,47 @@ function Chatbot() {
                 <div className="w-full max-w-md mb-6">
                   <Input
                     type="text"
-                    
                     value={isLoading ? "Predicting..." : prediction}
-                    
                     placeholder="Predicted disease will appear here..."
                     className="w-full p-3 text-lg rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     readOnly
                   />
-                  
-                  
                 </div>
-                {prediction && !isLoading && (
-                  <div className="flex space-x-4">
-                    <button
-                      onClick={handleStartChat}
-                      className="bg-purple-500 text-white text-xl px-6 py-3 rounded-full hover:bg-purple-600 transition-colors"
-                    >
-                      Start Chat
-                    </button>
-                    <button
-                      onClick={handlePrevention}
-                      className="bg-green-500 text-white text-xl px-6 py-3 rounded-full hover:bg-green-600 transition-colors"
-                    >
-                      Prevention
-                    </button>
-                    <button
-                      onClick={handleCure}
-                      className="bg-yellow-500 text-white text-xl px-6 py-3 rounded-full hover:bg-yellow-600 transition-colors"
-                    >
-                      Cure
-                    </button>
-                  </div>
-                )}
+                {/* Buttons for Send, Prevention, and Cure */}
+                <div className="flex space-x-2">
+                  <button
+                    onClick={handleStartChat}
+                    disabled={isLoading}
+                    className="bg-blue-500 text-white text-xl px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    Send
+                  </button>
+                  <button
+                    onClick={handlePrevention}
+                    disabled={isLoading || !detectedDisease}
+                    className="bg-green-500 text-white text-xl px-4 py-3 rounded-lg hover:bg-green-600 transition-colors"
+                  >
+                    Prevention
+                  </button>
+                  <button
+                    onClick={handleCure}
+                    disabled={isLoading || !detectedDisease}
+                    className="bg-yellow-500 text-white text-xl px-4 py-3 rounded-lg hover:bg-yellow-600 transition-colors"
+                  >
+                    Cure
+                  </button>
+                </div>
+                {/* New Upload Another Image Button */}
+                <button
+                  onClick={() => {
+                    setImage(null); // Reset the image state
+                    setPrediction(""); // Optionally reset the prediction state
+                    setShowUploader(true); // Show the uploader again
+                  }}
+                  className="bg-blue-500 text-white text-lg px-6 py-3 rounded-full hover:bg-blue-600 transition-colors mt-4"
+                >
+                  Upload Another Image
+                </button>
               </>
             )}
           </div>
@@ -248,6 +262,7 @@ function Chatbot() {
               />
               <button
                 onClick={() => sendMessage(inputMessage)}
+                onKeyUp={()=>sendMessage(inputMessage)}
                 disabled={isLoading}
                 className="bg-blue-500 text-white text-xl px-6 py-3 rounded-r-lg hover:bg-blue-600 transition-colors"
               >
