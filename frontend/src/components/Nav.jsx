@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import backgroundImage from '../assets/plantback.jpg'; // Adjust the path as needed
+import icon from '../assets//images/icon1.png'; // Adjust the path as needed
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -37,7 +38,10 @@ function Nav() {
               top: scrolled ? '10px' : '20px',
             }}
           >
-            <Link to="/" className={`text-xl md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>PLANT</Link>
+            <Link to="/" className={`flex items-center text-xl md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>
+              <img src={icon} alt="" className="w-16 h-16 mr-2" />
+              
+            </Link>
             <div className="md:hidden">
               <button onClick={() => setMenuOpen(!menuOpen)} className={`text-2xl ${scrolled ? 'text-white' : 'text-[#166434]'}`}>
                 ☰
