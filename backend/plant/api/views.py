@@ -16,15 +16,12 @@ model = torch.hub.load(HUB_URL, MODEL_NAME, pretrained=True)
 
 
 
-<<<<<<< HEAD
 BASE_DIR = Path(__file__).resolve().parent
 
 # Define the model path relative to the base directory
 MODEL_PATH = BASE_DIR / "model" / "model.pt"
-=======
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'model', 'model.pt')
->>>>>>> 7010361136f43e8ab6de7e9da269fbe6582efaaa
 model = torch.load(MODEL_PATH, map_location=torch.device('cpu'))
 model.eval()
 
@@ -139,7 +136,7 @@ def chat(request):
         chat = gemini_model.start_chat()
 
         # Provide context about the detected disease
-        context = f"The plant disease '{disease}' has been detected. Answer the following question briefly in 50 words: {question}"
+        context = f"The plant disease '{disease}' has been detected. Answer the following question briefly in 100 words: {question}"
 
         # Send the message to Gemini and get the response
         response = chat.send_message(context)
