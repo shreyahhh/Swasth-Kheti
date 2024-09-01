@@ -141,7 +141,7 @@ function Chatbot() {
       />
 
       <div className="relative z-10 h-24 flex justify-between items-center px-6 shadow-lg bg-black bg-opacity-50">
-        <h1 className="text-white text-xl font-bold mt-20 md:mt-0 md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">AI Chatbot</h1>
+        <h1 className="text-white text-xl font-bold mt-20 md:mt-0 md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">KethiChat</h1>
         <Link
           to="/"
           className="text-white text-xl hover:text-yellow-300 transition-colors font-bold mt-20 md:mt-0 md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 "
