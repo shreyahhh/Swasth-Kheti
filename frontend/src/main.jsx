@@ -9,6 +9,7 @@ import Article from './components/Article.jsx'
 import About from './components/About'
 import HindiArticle from './components/HindiArticle.jsx'
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
