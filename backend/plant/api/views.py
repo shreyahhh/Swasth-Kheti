@@ -132,7 +132,8 @@ model = torch.hub.load(HUB_URL, MODEL_NAME, pretrained=True)
 
 
 
-MODEL_PATH = r"C:\project\Swasth-Kheti\backend\plant\api\model\model.pt"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'model', 'model.pt')
 model = torch.load(MODEL_PATH, map_location=torch.device('cpu'))
 model.eval()
 

@@ -5,6 +5,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Home from './components/Home'
 import About from './components/About'; 
 import Article from './components/Article';
+import HindiArticle from './components/HindiArticle.jsx'
 
 function Layout() {
     const location = useLocation();
@@ -28,6 +29,7 @@ function Layout() {
                 <>
                     <section id="home"><Home /></section>
                     <section id="article"><Article /></section>
+                    <section id="hindi"><HindiArticle /></section>
                     <section id="about"><About /></section>
                 </>
             )}

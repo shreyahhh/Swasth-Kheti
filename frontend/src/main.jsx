@@ -7,6 +7,7 @@ import Chatbot from './components/Chatbot.jsx'
 import Layout from './Layout.jsx'
 import Article from './components/Article.jsx'
 import About from './components/About'
+import HindiArticle from './components/HindiArticle.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
       <Route path='/chatbot' element={<Chatbot />} />
       <Route path='/about' element={<About />} />
       <Route path='/article' element={<Article />} />
+      <Route path='/hindi' element={<HindiArticle />} />
     </Route>
   )
 )
