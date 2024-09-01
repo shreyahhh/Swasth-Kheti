@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
@@ -10,7 +10,6 @@ import { Input } from 'antd';
 const { Dragger } = Upload;
 
 function Chatbot() {
-  const navigate = useNavigate(); // Initialize useNavigate
   const [image, setImage] = useState(null);
   const [chatStarted, setChatStarted] = useState(false);
   const [prediction, setPrediction] = useState("");
@@ -98,11 +97,6 @@ function Chatbot() {
 
       const botMessage = { text: response.data.answer, sender: "bot" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-
-      // Navigate to the cure page if the message is related to cure
-      if (message.toLowerCase().includes("cure")) {
-        navigate("/cure"); // Change this to the actual route for the cure page
-      }
     } catch (error) {
       console.error("Error sending message:", error);
       const errorMessage = {
@@ -262,7 +256,6 @@ function Chatbot() {
               />
               <button
                 onClick={() => sendMessage(inputMessage)}
-                onKeyUp={()=>sendMessage(inputMessage)}
                 disabled={isLoading}
                 className="bg-blue-500 text-white text-xl px-6 py-3 rounded-r-lg hover:bg-blue-600 transition-colors"
               >
