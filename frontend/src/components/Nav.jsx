@@ -28,13 +28,14 @@ function Nav() {
         className="bg-cover bg-center h-full relative"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="relative w-full">
+        <div className="relative w-full bg-black">
           <div
             className={`fixed flex justify-between items-center px-4 md:px-8 shadow-lg rounded-full left-1/2 transform -translate-x-1/2 transition-all duration-300 hover:-translate-y-2 h-16 md:h-20 z-50 ${
               scrolled ? 'w-11/12 md:w-1/2 bg-[#A8B18F] text-white' : 'w-11/12 md:w-3/4 bg-transparent'
             }`}
             style={{ 
               top: scrolled ? '10px' : '20px',
+              
             }}
           >
             <Link to="/" className={`text-xl md:text-2xl font-bold ${scrolled ? 'text-white' : 'text-[#166434]'}`}>PLANT</Link>
