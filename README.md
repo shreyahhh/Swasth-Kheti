@@ -1,10 +1,10 @@
 # Swasth-Kheti
 
-##Overview
+#Overview
 
 This project is designed to help users detect plant diseases by uploading images of plants through a web-based interface. The system utilizes machine learning models to analyze the uploaded images and detect if the plant is diseased, as well as provides suggestions for further actions. In addition to image-based disease detection, the system also incorporates a chatbot that interacts with users, providing additional assistance and information based on their queries.
 
-##Features
+#Features
 
 Image Upload and Analysis: Users can upload images of plants for disease detection.
 
